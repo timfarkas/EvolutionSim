@@ -1,12 +1,6 @@
 import numpy
 import matplotlib.pyplot as plt
 
-n=1000
-runs = 100
-j = 10
-mutationBenefit = 0.05
-p = j / n
-
 def reproduce(i, n, s):
     p = i/n
     expectedP = (p*(1+s))/(p*(1+s)+(1-p))
@@ -53,4 +47,3 @@ plt.xlabel("Generations")
 plt.ylabel("p")
 plt.title("Fixation probability: "+ str(simulations[1]))
 plt.show()
-
