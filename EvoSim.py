@@ -1,13 +1,11 @@
 import numpy
 import matplotlib.pyplot as plt
 
-<<<<<<< HEAD
+
     # variables for bottleneck
 bottleneckTimestamp = 200
 decimationFactor = 0.1
 
-=======
->>>>>>> 303203e63ed05a0e0b6a53b4cd8a6b6f44f19c37
 def reproduce(i, n, s):
     p = i/n
     expectedP = (p*(1+s))/(p*(1+s)+(1-p))
