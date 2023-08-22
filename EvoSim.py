@@ -41,45 +41,31 @@ def simulate(initialJ, n, mutationBenefit, generations = 1000, bottleneckTimesta
     ## array simulation [currentGen, p, Bool fixation ]
     simulation = [[],[],0]
     j = initialJ
-    for currentGen in range(0, generations):
-        if currentGen < bottleneckTimestamp-1:                                 # situation before bottleneck
-            
-            #newJ = reproduce(j, n, mutationBenefit)                                             # constant population
-            #newJ = reproduceGrowing(j, n, mutationBenefit, currentGen, bottleneckTimestamp)     #growing population
-            newJ = reproduceGrowing2(j, n, mutationBenefit)                                   
-            
-            j = newJ  
-        elif currentGen == bottleneckTimestamp-1:
-            print (decimationFactor)
-            n = int(n* decimationFactor)                            # decimates population size
-            j = numpy.random.binomial(n, p)                                 # calculates new j
-            p = j/n
-            
-            #newJ = reproduce(j, n, mutationBenefit)                                             # constant population
-            #newJ = reproduceGrowing(j, n, mutationBenefit, currentGen, bottleneckTimestamp)     #growing population
-            newJ = reproduceGrowing2(j, n, mutationBenefit)
-            
-            j = newJ
-        else:                                                       # regrowing population size
-            
-            #newJ = reproduce(j, n, mutationBenefit)                                             # constant population
-            #newJ = reproduceGrowing(j, n, mutationBenefit, currentGen, bottleneckTimestamp)     #growing population
-            newJ = reproduceGrowing2(j, n, mutationBenefit)
-            
+    for currentGen in range(0, generations):            
         ### modify mutationBenefit based on environmentalBenefitModifier to simulate environmental effects on mutationBenefit
         modS = mutationBenefit * environmentalBenefitModifier(currentGen,mutationBenefit,mode)
         if currentGen < bottleneckTimestamp-1:                                 # situation before bottleneck
-            newJ = reproduce(j, n, modS)
+            
+            #newJ = reproduce(j, n, modS)                                             # constant population
+            #newJ = reproduceGrowing(j, n, modS, currentGen, bottleneckTimestamp)     #growing population
+            newJ = reproduceGrowing2(j, n, modS)   
+            
             j = newJ  
         elif currentGen == bottleneckTimestamp-1:
             #print (decimationFactor)
             n = int(n* decimationFactor)                            # decimates population size
             j = numpy.random.binomial(n, p)                                 # calculates new j
             p = j/n
-            newJ = reproduce(j, n, modS)
+            #newJ = reproduce(j, n, modS)                                            # constant population
+            #newJ = reproduceGrowing(j, n, modS, currentGen, bottleneckTimestamp)     #growing population
+            newJ = reproduceGrowing2(j, n, modS)
+            
             j = newJ
         else:                                                       # regrowing population size
-            newJ = reproduce(j, n, modS)
+            #newJ = reproduce(j, n, modS)                                             # constant population
+            #newJ = reproduceGrowing(j, n, modS, currentGen, bottleneckTimestamp)     #growing population
+            newJ = reproduceGrowing2(j, n, modS)
+            
             #print("Generation: "+str(currentGen)+" "+ str(j))
             j = newJ
             
