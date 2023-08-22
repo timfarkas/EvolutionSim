@@ -7,15 +7,15 @@ def reproduce(i, n, s):
     j = numpy.random.binomial(n, expectedP)
     return j
 
-def reproduceGrowing(i, n, s):
+#### takes population and proportion of mutants and outputs new proportion of mutants new population [j,n] based on growth factor r
+def reproduceGrowing(i, n, s, r=0.1):
     c = 1000    # Capacity of the system
-    r = 0.1         # growth factor
-    nNew = int((1+r)*n*(1-(r*n)/((1+r)*c)))                       # before bottleneck
+    n = int((1+r)*n*(1-(r*n)/((1+r)*c)))                       # before bottleneck
     
     p = i/n
     expectedP = (p*(1+s))/(p*(1+s)+(1-p))
     j = numpy.random.binomial(n, expectedP)
-    return j
+    return [j,n]
 
 ### takes initial mutants j, population size n, mutationbenefit s and no of generations
 def simulate(initialJ, n, mutationBenefit, generations = 1000, bottleneckTimestamp = 500, decimationFactor = 1, mode = None): #bottleneck variables added
@@ -30,25 +30,25 @@ def simulate(initialJ, n, mutationBenefit, generations = 1000, bottleneckTimesta
         if currentGen < bottleneckTimestamp-1:      # situation before bottleneck
             
             #newJ = reproduce(j, n, modS)           # constant population  
-            newJ = reproduceGrowing(j, n, modS)     #growing population
-            
-            j = newJ  
+            array = reproduceGrowing(j, n, modS)     #growing population
+            j = array[0] 
+            n = array[1]  
         elif currentGen == bottleneckTimestamp-1:
             #print (decimationFactor)
-            n = int(n* decimationFactor)                            # decimates population size
-            j = numpy.random.binomial(n, p)                                 # calculates new j
-            p = j/n
-            #newJ = reproduce(j, n, modS)           # constant population  
-            newJ = reproduceGrowing(j, n, modS)     #growing population
-            
-            j = newJ
+            nDecimated = int(n* decimationFactor)                            # decimates population size
+            j = numpy.random.binomial(nDecimated, p)                                 # calculates new j
+            p = j/nDecimated
+            #newJ = reproduce(j, nDecimated, modS)           # constant population  
+            array = reproduceGrowing(j, nDecimated, modS)     #growing population
+            j = array[0] 
+            n = array[1]
         else:                                                       # regrowing population size
             #newJ = reproduce(j, n, modS)           # constant population  
-            newJ = reproduceGrowing(j, n, modS)     #growing population
-            
+            array = reproduceGrowing(j, n, modS)     #growing population
             #print("Generation: "+str(currentGen)+" "+ str(j))
-            j = newJ
-            
+            j = array[0] 
+            n = array[1]
+
         p = j/n
         simulation[0].append(currentGen)
         simulation[1].append(p*n)
@@ -56,6 +56,7 @@ def simulate(initialJ, n, mutationBenefit, generations = 1000, bottleneckTimesta
             simulation[2] = 0
             break
         if p == 1:
+            print("BREAK, n ="+str(n))
             simulation[2] = 1
             break
     return simulation
