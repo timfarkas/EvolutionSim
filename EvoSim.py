@@ -101,34 +101,37 @@ maxGenerations = 1000
 
 ### vanilla
 simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,1100,1)
+vanillaFixation = str(simulations[1])
+plt.plot(simulations[0][0][0],simulations[0][0][1],color="green", label = "standard, P(fix)="+vanillaFixation)
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="green")
-plt.xlabel("Generations")
-plt.ylabel("p")
-vanillaFixation = str(simulations[1])
 
 ### seasonalVariation
 simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,100,1100,1,"Seasons")
+seasonalVariationFixation = str(simulations[1])
+plt.plot(simulations[0][0][0],simulations[0][0][1],color="blue", label = "seasonalVariation, P(fix)="+ seasonalVariationFixation)
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="blue")
-plt.xlabel("Generations")
-plt.ylabel("p")
-seasonalVariationFixation = str(simulations[1])
+
 
 ### bottleneck
 bottleneckTimestamp = 100
 simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,bottleneckTimestamp,0.1)
+bottleneckFixation = str(simulations[1])
+plt.plot(simulations[0][0][0],simulations[0][0][1],color="red", label = "bottleneck, P(fix)="+bottleneckFixation)
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="red")
+
+
+
 plt.xlabel("Generations")
 plt.axvline(x = bottleneckTimestamp,color = 'r',linestyle='--')
 plt.ylabel("p")
-plt.title("Fixation probability: "+ str(simulations[1]))
 
-bottleneckFixation = str(simulations[1])
 
-plt.suptitle("WRIGHT FISHER \n P(fixation): "+"Vanilla: "+ vanillaFixation + "; Seasons: "+ seasonalVariationFixation + "; Bottleneck: "+bottleneckFixation)
+plt.suptitle("WRIGHT FISHER")
 subtext = "initialMutants = "+str(initialMutants)+"; population = "+str(population)+"; fitnessBenefit ="+str(fitnessBenefit*100)+"%; maxGenerations = "+str(maxGenerations)
+plt.legend(title='Legend')
 plt.title(subtext, fontsize=10, color='gray')
 plt.show()
 
