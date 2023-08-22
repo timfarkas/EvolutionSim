@@ -91,8 +91,16 @@ def sinusModifier(gen, s, period, amplitude):
 	modS = s * numpy.sin((1/period)*gen) * amplitude
 	return modS
 
+
+# SIMULATIONS
+initialMutants = 50
+population = 1000
+fitnessBenefit = 0.02
+maxGenerations = 1000
+
+
 ### vanilla
-simulations = runSimulations(50,1000,0.02, 1000, 100,1100,1)
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,1100,1)
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="green")
 plt.xlabel("Generations")
@@ -100,7 +108,7 @@ plt.ylabel("p")
 vanillaFixation = str(simulations[1])
 
 ### seasonalVariation
-simulations = runSimulations(50,1000,0.02, 1000, 100,1100,1,"Seasons")
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,100,1100,1,"Seasons")
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="blue")
 plt.xlabel("Generations")
@@ -109,7 +117,7 @@ seasonalVariationFixation = str(simulations[1])
 
 ### bottleneck
 bottleneckTimestamp = 100
-simulations = runSimulations(50, 1000, 0.02, 1000, 100,bottleneckTimestamp,0.1)
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,bottleneckTimestamp,0.1)
 for simulation in simulations[0][::3]:
     plt.plot(simulation[0],simulation[1],color="red")
 plt.xlabel("Generations")
@@ -119,6 +127,8 @@ plt.title("Fixation probability: "+ str(simulations[1]))
 
 bottleneckFixation = str(simulations[1])
 
-plt.title("P(fixation): \n"+"Vanilla: "+ vanillaFixation + "\nSeasons: "+ seasonalVariationFixation + "\nBottleneck: "+bottleneckFixation)
+plt.suptitle("WRIGHT FISHER \n P(fixation): "+"Vanilla: "+ vanillaFixation + "; Seasons: "+ seasonalVariationFixation + "; Bottleneck: "+bottleneckFixation)
+subtext = "initialMutants = "+str(initialMutants)+"; population = "+str(population)+"; fitnessBenefit ="+str(fitnessBenefit*100)+"%; maxGenerations = "+str(maxGenerations)
+plt.title(subtext, fontsize=10, color='gray')
 plt.show()
 
