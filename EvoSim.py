@@ -56,7 +56,7 @@ def simulate(initialJ, n, mutationBenefit, generations = 1000, bottleneckTimesta
             simulation[2] = 0
             break
         if p == 1:
-            print("BREAK, n ="+str(n))
+            #print("BREAK, n ="+str(n))
             simulation[2] = 1
             break
     return simulation
@@ -79,7 +79,8 @@ def environmentalBenefitModifier(gen, s, mode):
     if mode == None:
         return 1
     if mode.lower() == "seasons":
-        return sinusModifier(gen, s, 25, 2)
+        modS = numpy.abs(sinusModifier(gen, s, 25, 2))
+        return modS
     else:
         return 1 
 #else if mode == "random":
@@ -93,36 +94,34 @@ def sinusModifier(gen, s, period, amplitude):
 
 
 # SIMULATIONS
-initialMutants = 50
+initialMutants = 10
 population = 1000
 fitnessBenefit = 0.02
 maxGenerations = 1000
-
+runs = 200
 
 ### vanilla
-simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,1100,1)
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, runs,1100,1)
 vanillaFixation = str(simulations[1])
 plt.plot(simulations[0][0][0],simulations[0][0][1],color="green", label = "standard, P(fix)="+vanillaFixation)
-for simulation in simulations[0][::3]:
+for simulation in simulations[0][::1]:
     plt.plot(simulation[0],simulation[1],color="green")
 
 ### seasonalVariation
-simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,100,1100,1,"Seasons")
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,runs,1100,1,"Seasons")
 seasonalVariationFixation = str(simulations[1])
 plt.plot(simulations[0][0][0],simulations[0][0][1],color="blue", label = "seasonalVariation, P(fix)="+ seasonalVariationFixation)
-for simulation in simulations[0][::3]:
+for simulation in simulations[0][::1]:
     plt.plot(simulation[0],simulation[1],color="blue")
 
 
 ### bottleneck
 bottleneckTimestamp = 100
-simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, 100,bottleneckTimestamp,0.1)
+simulations = runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, runs,bottleneckTimestamp,0.1)
 bottleneckFixation = str(simulations[1])
 plt.plot(simulations[0][0][0],simulations[0][0][1],color="red", label = "bottleneck, P(fix)="+bottleneckFixation)
-for simulation in simulations[0][::3]:
+for simulation in simulations[0][::1]:
     plt.plot(simulation[0],simulation[1],color="red")
-
-
 
 plt.xlabel("Generations")
 plt.axvline(x = bottleneckTimestamp,color = 'r',linestyle='--')
@@ -130,7 +129,7 @@ plt.ylabel("p")
 
 
 plt.suptitle("WRIGHT FISHER")
-subtext = "initialMutants = "+str(initialMutants)+"; population = "+str(population)+"; fitnessBenefit ="+str(fitnessBenefit*100)+"%; maxGenerations = "+str(maxGenerations)
+subtext = "initialMutants = "+str(initialMutants)+"; population = "+str(population)+"; fitnessBenefit ="+str(fitnessBenefit*100)+"%; maxGenerations = "+str(maxGenerations)+"; runs ="+str(runs)
 plt.legend(title='Legend')
 plt.title(subtext, fontsize=10, color='gray')
 plt.show()
