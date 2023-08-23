@@ -21,9 +21,9 @@ class GraphSim:
             ("Initial Mutants:", 0, 100),
             ("Growth Rate:", 0, 1),
             ("Mutation Benefit:", 0, 1),
-            ("Bottleneck Timestamp:", 1, 2000),
-            ("Decimation Factor:", 0, 1)
+            ("Bottleneck Timestamp:", 1, 1500),
         ]
+        #("Decimation Factor:", 0.1, 0.9)
         self.slider_list = []
 
         for label_text, min_value, max_value in slider_info:
@@ -77,28 +77,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#     # Erstellen Sie Schieberegler mit Echtzeit-Aktualisierung
-    # def create_sliders(self):    
-    #     slider_info = [
-    #         ("Population Size:", 1, 1000),
-    #         ("Generations:", 1, 1000),
-    #         ("Runs:", 1, 100),
-    #         ("Capacity:", 1, 2000),
-    #         ("Initial Mutants:", 0, 100),
-    #         ("Growth Rate:", 0, 1),
-    #         ("Mutation Benefit:", 0, 1),
-    #         ("Bottleneck Timestamp:", 1, 2000),
-    #         ("Decimation Factor:", 0, 1)
-    #     ]
-    #     self.slider_list = []
-    #     print("Start Init")
-    #     for label_text, min_value, max_value in slider_info:
-    #         label = ttk.Label(self.root, text=label_text)
-    #         label.pack()
-    #         slider = ttk.Scale(self.root, from_=min_value, to=max_value, orient="horizontal", command=self.update_parameters)
-    #         slider.pack()
-    #         self.slider_list.append(slider)
-    #     print("Initialize")
-    #     self.booleanSlider = True

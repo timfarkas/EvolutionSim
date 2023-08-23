@@ -9,6 +9,8 @@ class EvoSim:
     
     #### takes population and proportion of mutants and outputs new proportion of mutants new population [j,n] based on growth factor r
     def reproduceGrowing(self, i, n, s, c ,r):
+        c = int(self.parameters[3])
+        #print("Capacity: "+str(c))
         n = int((1+r)*n*(1-(r*n)/((1+r)*c)))                       # before bottleneck
         p = i/n
         expectedP = (p*(1+s))/(p*(1+s)+(1-p))
@@ -19,6 +21,9 @@ class EvoSim:
     def simulate(self, initialJ, n, mutationBenefit, generations = 1000, bottleneckTimestamp = 500, decimationFactor = 1, mode = None,c = 1000,r = 0.1): #bottleneck variables added
         ## array simulation [currentGen, p, Bool fixation ]
         simulation = [[],[],0]
+        #bottleneckTimestamp = self.parameters[7]
+        #decimationFactor    = self.parameters[8]
+        
         j = initialJ
         p = j/n
         for currentGen in range(0, generations):            
@@ -26,7 +31,7 @@ class EvoSim:
             modS = mutationBenefit * self.environmentalBenefitModifier(currentGen,mutationBenefit,mode)
             p = j/n
             
-            if currentGen == bottleneckTimestamp-1:
+            if currentGen == bottleneckTimestamp:
                 nDecimated = int(n* decimationFactor)                   # decimates population size
                 j = numpy.random.binomial(nDecimated, p)                # calculates new j
                 p = j/nDecimated  
@@ -88,7 +93,9 @@ class EvoSim:
         r                   = int(self.parameters[5])
         fitnessBenefit      = self.parameters[6]
         bottleneckTimestamp = int(self.parameters[7])
-        decimationFactor    = int(self.parameters[8])
+        decimationFactor    =   0.5 #int(self.parameters[8])
+        print("DEcFActor "+ str(decimationFactor))
+        print("BottleNeck "+ str(bottleneckTimestamp))
         plt.clf()
         ### vanilla
         #(initialJ, n, mutationBenefit, generations = 1000, runs = 100, bottleneckTimestamp = 1100, decimation = 1, envMode = None,c=1000,r=1):
@@ -100,7 +107,7 @@ class EvoSim:
             plt.plot(simulation[0],simulation[1],color="green")
 
         ### seasonalVariation
-        simulations = self.runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,runs,bottleneckTimestamp,decimationFactor,"Seasons",c,r)
+        simulations = self.runSimulations(initialMutants,population,fitnessBenefit, maxGenerations,runs,noBottleneck,decimationFactor,"Seasons",c,r)
         seasonalVariationFixation = str(simulations[1])
         plt.plot(simulations[0][0][0],simulations[0][0][1],color="blue", label = "seasonalVariation, P(fix)="+ seasonalVariationFixation)
         for simulation in simulations[0][::1]:
@@ -108,6 +115,7 @@ class EvoSim:
 
 
         ### bottleneck
+        
         simulations = self.runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, runs,bottleneckTimestamp,decimationFactor,None,c,r)
         bottleneckFixation = str(simulations[1])
         plt.plot(simulations[0][0][0],simulations[0][0][1],color="red", label = "bottleneck, P(fix)="+bottleneckFixation)
