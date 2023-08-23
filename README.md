@@ -11,7 +11,7 @@ For the purposes of our implementation, we assumed haploid, asexual reproduction
 
 
 ### Context
-EvoSim was drafted and realized as a group project over in ~10 working hours at the working group "Quantitatively Modeling Evolution" at a summer academy by the German scholarship foundation in Leysin, Switzerland. Our group consisted of four scholarship holders with different backgrounds:
+EvoSim was drafted and realized as a group project over ~10 working hours at the working group "Quantitatively Modeling Evolution" at a summer academy by the German scholarship foundation in Leysin, Switzerland. Our group consisted of four scholarship holders with different backgrounds:
 - Johanna Buth (biology)
 - Georg Eichler (maths)
 - Mathilda Harbering (law)
