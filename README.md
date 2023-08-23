@@ -7,7 +7,7 @@ This project is an implementation of the Wright-Fisher model of evolutionary dyn
 - population bottlenecks
 - seasonal variation of reproductive advantage
 
-For the purposes of our implementation, we assumed haploid, asexual reproduction. For simplicity, we did not model clonal interference dynamics, however, the code was designed to allow easy
+For the purposes of our implementation, we assumed haploid, asexual reproduction. For simplicity, we did not model clonal interference dynamics, however, the code was designed to allow easy extension in this direction if needed in the future.
 
 
 ### Context
