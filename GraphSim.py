@@ -8,6 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from EvoSim import EvoSim
 
 class GraphSim:
+    ax = None
     def __init__(self, root):
         self.root = root
         self.parameters = [500, 1000, 10, 3000, 100, 0.9, 0.1, 0.1, 500, 0.1]  # Initializes parameter list
@@ -35,15 +36,13 @@ class GraphSim:
             slider.configure(command=lambda value, slider=slider: self.update_parameters(slider))
             self.slider_list.append(slider)
         
-        # self.create_graph()
+        self.figure, self.ax = plt.subplots(figsize=(8, 6))
+        self.canvas = FigureCanvasTkAgg(self.figure, master=self.root)
+        self.canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
+
         self.simulation = EvoSim(self.parameters)  # creates EvoSim instance
         self.update_parameters(slider)
         
-        
-    # def create_graph(self):
-    #     self.figure, self.ax = plt.subplots(figsize=(8, 6))
-    #     self.canvas = FigureCanvasTkAgg(self.figure, master=self.root)
-    #     self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
     def update_parameters(self, slider):
         self.parameters = [slider.get() for slider in self.slider_list]

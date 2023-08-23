@@ -130,7 +130,5 @@ class EvoSim:
         plt.suptitle("WRIGHT FISHER")
         subtext = "initialMutants = "+str(initialMutants)+"; population = "+str(population)+"; fitnessBenefit ="+str(fitnessBenefit*100)+"%; maxGenerations = "+str(maxGenerations)+"; runs ="+str(runs)
         plt.legend(title='Legend')
-        plt.title(subtext, fontsize=10, color='gray')
-        plt.show()
-        
+        plt.title(subtext, fontsize=10, color='gray')        
         return simulations
