@@ -6,3 +6,10 @@ This project is an implementation of the Wright-Fisher model of evolutionary dyn
 - logistic population growth
 - population bottlenecks
 - seasonal variation of reproductive advantage
+
+### Context
+EvoSim was drafted and realized as a group project over in ~10 working hours at the working group "Quantitatively Modeling Evolution" at a summer academy by the German scholarship foundation in Leysin, Switzerland. Our group consisted of four scholarship holders with different backgrounds:
+- Johanna Buth (biology)
+- Georg Eichler (maths)
+- Mathilda Harbering (law)
+- Tim Farkas (medicine, CS)
