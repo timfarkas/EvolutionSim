@@ -24,6 +24,8 @@ class EvoSim:
         for currentGen in range(0, generations):            
             ### modify mutationBenefit based on environmentalBenefitModifier to simulate environmental effects on mutationBenefit
             modS = mutationBenefit * self.environmentalBenefitModifier(currentGen,mutationBenefit,mode)
+            p = j/n
+            
             if currentGen == bottleneckTimestamp-1:
                 nDecimated = int(n* decimationFactor)                   # decimates population size
                 j = numpy.random.binomial(nDecimated, p)                # calculates new j
@@ -49,7 +51,7 @@ class EvoSim:
         ## runs several simulations and returns [[array of all simulation histories], float fixationProbability]
         ## initialJ is the number of initial mutants, n is population size
         ## bottleneckTimestamp is the time where a population bottleneck is simulated, reducing the population to decimation
-    def runSimulations(self,initialJ, n, mutationBenefit, generations = 1000, runs = 100, bottleneckTimestamp = 1100, decimation = 1, envMode = None,c=1000,r=1):
+    def runSimulations(self,initialJ, n, mutationBenefit, generations = 1000, runs = 100, bottleneckTimestamp = 500, decimation = 1, envMode = None,c=1000,r=1):
         simulations = [[],0]
         #print(runs)
         for run in range(0, runs):
@@ -91,7 +93,7 @@ class EvoSim:
         ### vanilla
         #(initialJ, n, mutationBenefit, generations = 1000, runs = 100, bottleneckTimestamp = 1100, decimation = 1, envMode = None,c=1000,r=1):
         noBottleneck = maxGenerations +1
-        simulations = self.runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, runs,noBottleneck) #,1,None,c,r
+        simulations = self.runSimulations(initialMutants,population,fitnessBenefit, maxGenerations, runs,noBottleneck,1,None,c,r) #,1,None,c,r
         vanillaFixation = str(simulations[1])
         plt.plot(simulations[0][0][0],simulations[0][0][1],color="green", label = "standard, P(fix)="+vanillaFixation)
         for simulation in simulations[0][::1]:
